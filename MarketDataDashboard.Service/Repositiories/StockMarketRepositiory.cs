@@ -20,36 +20,40 @@ namespace MarketDataDashboard.Service.Repositiories
             List<TradeDataContext> tradeDataContexts = new List<TradeDataContext>();
             MetaData metaData = new MetaData();
             TimeSeries timeSeries = new TimeSeries();
-            foreach (string security in securities)
+
+            try
             {
-                string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={security}&apikey=J28MUJZ0FXSQC7NA";
-                Uri queryUri = new Uri(QUERY_URL);
-
-                using (WebClient client = new WebClient())
+                foreach (string security in securities)
                 {
-                    string result = client.DownloadString(queryUri);
-                    metaData = JsonConvert.DeserializeObject<MetaData>(result);
-                    timeSeries = JsonConvert.DeserializeObject<TimeSeries>(result);
+                    string QUERY_URL = $"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={security}&apikey=J28MUJZ0FXSQC7NA";
+                    Uri queryUri = new Uri(QUERY_URL);
+
+                    using (WebClient client = new WebClient())
+                    {
+                        string result = client.DownloadString(queryUri);
+                        metaData = JsonConvert.DeserializeObject<MetaData>(result);
+                        timeSeries = JsonConvert.DeserializeObject<TimeSeries>(result);
+                    }
+
+                    DateTime currentDay = timeSeries.attributes.Keys.Max(a => a.Date);
+                    timeSeries.attributes.TryGetValue(currentDay, out TimeSeriesAttribute timeSeriesAttribute);
+
+                    tradeDataContexts.Add(
+                        new TradeDataContext(
+                            symbol: metaData.metaData.symbol,
+                            tradeDate: currentDay,
+                            open: timeSeriesAttribute.open,
+                            high: timeSeriesAttribute.high,
+                            low: timeSeriesAttribute.low,
+                            close: timeSeriesAttribute.close,
+                            volume: timeSeriesAttribute.volume
+                            ));
                 }
-
-                DateTime currentDay = timeSeries.attributes.Keys.Max(a => a.Date);
-                timeSeries.attributes.TryGetValue(currentDay, out TimeSeriesAttribute timeSeriesAttribute);
-
-                tradeDataContexts.Add(
-                    new TradeDataContext(
-                        symbol: metaData.metaData.symbol,
-                        tradeDate: currentDay,
-                        open: timeSeriesAttribute.open,
-                        high: timeSeriesAttribute.high,
-                        low: timeSeriesAttribute.low,
-                        close: timeSeriesAttribute.close,
-                        volume: timeSeriesAttribute.volume
-                        ));
             }
+            catch (Exception ex) { throw ex; }
 
             return tradeDataContexts.Equals(null) ? new List<TradeDataContext>() : tradeDataContexts;
         }
-
 
     }
 
