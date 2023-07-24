@@ -9,6 +9,7 @@ namespace MarketDataDashboard.Service.Managers
     public class PortfolioManager : IPortfolioManager
     {
         private IPersistentStorageRepositiory _persistentStorageRepositiory;
+
         private IStockMarketRepositiory _stockMarketRepositiory;
         public PortfolioManager(IPersistentStorageRepositiory persistentStorageRepositiory, IStockMarketRepositiory stockMarketRepositiory)
         {
@@ -45,7 +46,11 @@ namespace MarketDataDashboard.Service.Managers
             foreach (var tradeDataContext in a)
             {
                 portfolioDto.SecuritiesPandL.TryGetValue(tradeDataContext.Symbol, out SecurityPandLDto securityPandLDto);
+
                 securityPandLDto.CalculatePandLPosition(tradeDataContext.High, tradeDataContext.Close);
+
+                portfolioDto.AddCurrentSecuritiesMarketPosition(tradeDataContext.Symbol, tradeDataContext.TradeDate, tradeDataContext.Open, tradeDataContext.High, 
+                    tradeDataContext.Low, tradeDataContext.Close, tradeDataContext.Volume);
             }
 
             return portfolioDto.Equals(null) ? new PortfolioDto() : portfolioDto;

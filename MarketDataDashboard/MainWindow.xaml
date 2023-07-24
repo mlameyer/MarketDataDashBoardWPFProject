@@ -19,8 +19,8 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Margin="0,0,0,0">Current Market</Label>
-        <Button Grid.Row="0" Name="btnGetCurrentMarket" Click="btnGetCurrentMarket_Click" Content="Get Current Market" HorizontalAlignment="Left" Margin="100,3,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.353,0.152"/>
-        <DataGrid x:Name="currentMarketGrid" Grid.Row="0" d:ItemsSource="{d:Binding SecuritiesCurrentMarketPositionsDto}" Margin="0,30,0,0"/>
+        <!--<Button Grid.Row="0" Name="btnGetCurrentMarket" Click="btnGetCurrentMarket_Click" Content="Get Current Market" HorizontalAlignment="Left" Margin="100,3,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.353,0.152"/>-->
+        <DataGrid x:Name="currentMarketGrid" Grid.Row="0" d:ItemsSource="{d:Binding PortfolioDto}" Margin="0,30,0,0"/>
 
         <Label Grid.Row="1" Margin="0,0,0,0">Portfolio</Label>
         <Button Grid.Row="1" Name="btnGetPortfolio" Click="btnGetPortfolio_Click" Content="Get Current Portfolio" HorizontalAlignment="Left" Margin="100,3,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.353,0.152"/>

@@ -28,7 +28,6 @@ namespace MarketDataDashboard
 
         private void ConfigureServices(ServiceCollection services)
         {
-            services.AddTransient<IMarketSecurityPositionManager, MarketSecurityPositionManager>();
             services.AddTransient<IPortfolioManager, PortfolioManager>();
             services.AddTransient<IPersistentStorageRepositiory, PersistentStorageRepositiory>();
             services.AddTransient<IStockMarketRepositiory, StockMarketRepositiory>();

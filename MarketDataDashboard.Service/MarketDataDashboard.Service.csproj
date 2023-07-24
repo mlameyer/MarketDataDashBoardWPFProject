@@ -80,11 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\PortfolioDto.cs" />
-    <Compile Include="Contracts\SecuritiesCurrentMarketPositionsDto.cs" />
-    <Compile Include="Contracts\SecurityCurrentMarketPositionDto.cs" />
-    <Compile Include="Interfaces\IMarketSecurityPositionManager.cs" />
     <Compile Include="Interfaces\IPortfolioManager.cs" />
-    <Compile Include="Managers\MarketSecurityPositionManager.cs" />
     <Compile Include="Managers\PortfolioManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositiories\DBModels\SecurityDBContext.cs" />

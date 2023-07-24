@@ -7,16 +7,22 @@ namespace MarketDataDashboard.Service.Contracts
     public class PortfolioDto : ObservableCollection<PortfolioDto>
     {
         private readonly List<SecurityDto> _securitiesTransactionHistory;
+
         public IReadOnlyCollection<SecurityDto> SecuritiesTransactionHistory => _securitiesTransactionHistory;
 
         private readonly Dictionary<string, SecurityPandLDto> _securitiesPandL;
 
         public IReadOnlyDictionary<string, SecurityPandLDto> SecuritiesPandL => _securitiesPandL;
 
+        private readonly List<SecurityCurrentMarketPositionDto> _securitiesCurrentPosition;
+
+        public IReadOnlyCollection<SecurityCurrentMarketPositionDto> SecuritiesCurrentPosition => _securitiesCurrentPosition;
+
         public PortfolioDto() : base()
         {
             _securitiesTransactionHistory = new List<SecurityDto>();
             _securitiesPandL = new Dictionary<string, SecurityPandLDto>();
+            _securitiesCurrentPosition = new List<SecurityCurrentMarketPositionDto>();
         }
 
         public void AddSecurityToPortfolio(string description, DateTime tradeDate, string action, decimal quantity,
@@ -50,6 +56,20 @@ namespace MarketDataDashboard.Service.Contracts
                 quantity
                 ));
             }
+        }
+
+        public void AddCurrentSecuritiesMarketPosition(string symbol, DateTime tradeDate, decimal open, decimal high, decimal low,
+            decimal close, decimal volume)
+        {
+            _securitiesCurrentPosition.Add(new SecurityCurrentMarketPositionDto(
+                symbol: symbol,
+                tradeDate: tradeDate,
+                open: open,
+                high: high,
+                low: low,
+                close: close,
+                volume: volume
+                ));
         }
     }
 
@@ -121,6 +141,35 @@ namespace MarketDataDashboard.Service.Contracts
             InceptionPandL = MarketValue - Cost;
             Price = currentPrice;
             PreviousClose = previosClose;
+        }
+    }
+
+    public class SecurityCurrentMarketPositionDto
+    {
+        public string Symbol { get; }
+
+        public DateTime TradeDate { get; }
+
+        public decimal Open { get; }
+
+        public decimal High { get; }
+
+        public decimal Low { get; }
+
+        public decimal Close { get; }
+
+        public decimal Volume { get; }
+
+        public SecurityCurrentMarketPositionDto(string symbol, DateTime tradeDate, decimal open, decimal high, decimal low,
+            decimal close, decimal volume)
+        {
+            Symbol = symbol;
+            TradeDate = tradeDate;
+            Open = open;
+            High = high;
+            Low = low;
+            Close = close;
+            Volume = volume;
         }
     }
 }
