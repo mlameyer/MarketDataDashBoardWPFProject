@@ -1,0 +1,34 @@
+﻿<Window x:Class="MarketDataDashboard.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MarketDataDashboard" xmlns:contracts="clr-namespace:MarketDataDashboard.Service.Contracts;assembly=MarketDataDashboard.Service"
+        mc:Ignorable="d"
+        Title="Market Data Dashboard" Height="450" Width="800">
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Margin="0,0,0,0">Current Market</Label>
+        <Button Grid.Row="0" Name="btnGetCurrentMarket" Click="btnGetCurrentMarket_Click" Content="Get Current Market" HorizontalAlignment="Left" Margin="100,3,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.353,0.152"/>
+        <DataGrid x:Name="currentMarketGrid" Grid.Row="0" d:ItemsSource="{d:Binding SecuritiesCurrentMarketPositionsDto}" Margin="0,30,0,0"/>
+
+        <Label Grid.Row="1" Margin="0,0,0,0">Portfolio</Label>
+        <Button Grid.Row="1" Name="btnGetPortfolio" Click="btnGetPortfolio_Click" Content="Get Current Portfolio" HorizontalAlignment="Left" Margin="100,3,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.353,0.152"/>
+        <DataGrid Grid.Row="1" x:Name="currentPortfolioGrid" d:ItemsSource="{d:Binding PortfolioDto}" Margin="0,30,0,0"/>
+
+        <Label Grid.Row="2">P &amp; L Report</Label>
+        <DataGrid Grid.Row="2" x:Name="currentPortfolioPandLGrid" d:ItemsSource="{d:Binding PortfolioDto}" Margin="0,30,0,0"/>
+        
+
+    </Grid>
+</Window>
